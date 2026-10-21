@@ -61,6 +61,26 @@
       font-size: 13px;
       color: var(--muted);
     }
+    .head-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .head-row h1 { margin: 0; }
+    .btn-refresh {
+      flex-shrink: 0;
+      padding: 10px 14px;
+      min-height: 44px;
+      border-radius: 10px;
+      background: #1a5cff;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .btn-refresh:active { opacity: 0.85; }
     .tabs {
       display: flex;
       flex-wrap: wrap;
@@ -172,7 +192,10 @@
 <body>
   <div class="phone">
     <header>
-      <h1>아이콘 창고</h1>
+      <div class="head-row">
+        <h1>아이콘 창고</h1>
+        <button type="button" class="btn-refresh" id="btnRefresh">새로고침</button>
+      </div>
       <p class="sub">칸을 고른 뒤 그림을 누르세요. 창은 그대로 둡니다.</p>
       <nav class="tabs" id="tabs"></nav>
     </header>
@@ -194,6 +217,14 @@
     document.addEventListener("submit", function (e) {
       e.preventDefault();
     }, true);
+
+    document.getElementById("btnRefresh").addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var u = new URL(window.location.href);
+      u.searchParams.set("r", String(Date.now()));
+      window.location.replace(u.toString());
+    });
 
     var SECTIONS = [
       {
