@@ -154,6 +154,35 @@
       grid-column: 1 / -1;
       min-height: auto;
     }
+    /* 소설가 ProjectNL credit와 동일 배치 — 그림은 복사본만, 크기 재가공 없음 */
+    .novel-credit-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 300px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #fff;
+      box-sizing: border-box;
+    }
+    .novel-credit-icon {
+      display: block;
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      object-fit: contain;
+    }
+    .novel-credit-logo {
+      display: block;
+      flex: 1 1 auto;
+      width: auto;
+      max-width: calc(100% - 48px);
+      height: 36px;
+      object-fit: contain;
+      object-position: left center;
+    }
     .label {
       font-size: 11px;
       text-align: center;
@@ -231,10 +260,16 @@
         id: "company",
         title: "회사",
         items: [
-          { label: "소설가와 같은 회사 로고", src: "company/logo-plus-name.png", path: "company/logo-plus-name.png", wide: true },
-          { label: "용 아이콘만", src: "company/chamzone-icon.png", path: "company/chamzone-icon.png" },
-          { label: "회사명 글자만", src: "company/chamzone-logo.png", path: "company/chamzone-logo.png", wide: true },
-          { label: "회사명 (작은 표시)", src: "company/logo-with-name-phone.png", path: "company/logo-with-name-phone.png", wide: true }
+          {
+            label: "소설가와 같은 회사 로고",
+            path: "company/chamzone-icon.png + company/chamzone-logo.png",
+            wide: true,
+            novelCredit: true,
+            iconSrc: "company/chamzone-icon.png",
+            logoSrc: "company/chamzone-logo.png"
+          },
+          { label: "용 아이콘만 (복사본)", src: "company/chamzone-icon.png", path: "company/chamzone-icon.png" },
+          { label: "회사명 글자만 (복사본)", src: "company/chamzone-logo.png", path: "company/chamzone-logo.png", wide: true }
         ]
       },
       {
@@ -330,18 +365,39 @@
         check.className = "check";
         check.textContent = "✓";
 
-        var img = document.createElement("img");
-        img.src = item.src;
-        img.alt = item.label;
-        img.className = item.wide ? "wide" : "sq";
-        img.draggable = false;
+        tile.appendChild(check);
+        if (item.novelCredit) {
+          var row = document.createElement("div");
+          row.className = "novel-credit-row";
+          var icon = document.createElement("img");
+          icon.className = "novel-credit-icon";
+          icon.src = item.iconSrc;
+          icon.alt = "";
+          icon.width = 40;
+          icon.height = 40;
+          icon.draggable = false;
+          var logo = document.createElement("img");
+          logo.className = "novel-credit-logo";
+          logo.src = item.logoSrc;
+          logo.alt = item.label;
+          logo.width = 200;
+          logo.height = 36;
+          logo.draggable = false;
+          row.appendChild(icon);
+          row.appendChild(logo);
+          tile.appendChild(row);
+        } else {
+          var img = document.createElement("img");
+          img.src = item.src;
+          img.alt = item.label;
+          img.className = item.wide ? "wide" : "sq";
+          img.draggable = false;
+          tile.appendChild(img);
+        }
 
         var lab = document.createElement("div");
         lab.className = "label";
         lab.textContent = item.label;
-
-        tile.appendChild(check);
-        tile.appendChild(img);
         tile.appendChild(lab);
         tile.addEventListener("click", function (e) {
           e.preventDefault();
@@ -355,6 +411,13 @@
       });
       main.appendChild(grid);
     }
+
+    // 시작 시 회사 칸 · 소설가 복사본 로고
+    showSection("company");
+    selectedPath = "company/chamzone-icon.png + company/chamzone-logo.png";
+    selName.textContent = "소설가와 같은 회사 로고";
+    selPath.textContent = "company/chamzone-icon.png + company/chamzone-logo.png (소설가 원본 복사)";
+    showSection("company");
   </script>
 </body>
 </html>
