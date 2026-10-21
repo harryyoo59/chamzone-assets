@@ -1,0 +1,7 @@
+.DS_Store
+PinVault*
+pin-vault.py
+pin-vault.swift
+*.command
+*.log
+.vercel
