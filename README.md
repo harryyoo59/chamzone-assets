@@ -1,9 +1,12 @@
 # 참존 아이콘 창고 (작업용)
 
+아이콘 창고 주소 = https://chamzone-assets.vercel.app
+
 이 폴더는 **cz assets** 프로젝트입니다.
 
 - Cursor 목록·대화: https://cursor.com/agents/bc-70377b52-d305-4c1c-8689-f104b79c801e
-- 미리보기(옆 컴퓨터): http://127.0.0.1:8765/preview.html
+- 미리보기(옆 컴퓨터): https://chamzone-assets.vercel.app
+- 예비 주소(GitHub Pages): https://harryyoo59.github.io/chamzone-assets/
 
 손님용 사이트가 아닙니다. 맥에서 아이콘·로고를 모아 두고, 다른 프로그램을 만들 때 찾아 붙이는 **작업용 창고**입니다.
 
