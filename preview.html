@@ -193,21 +193,19 @@
       -webkit-user-select: none;
       user-select: none;
     }
-    /* 핸드폰에 넣는 크기 — 창고를 꽉 채우는 거대 미리보기 금지 */
-    .item-pic img.phone-sq {
-      width: 96px;
-      height: 96px;
-      max-width: 96px;
-      object-fit: contain;
-      display: block;
-    }
+    /* 원본 픽셀 크기 그대로 — 작은 아이콘을 키워서 흐리게 만들지 않음.
+       화면(약 390)보다 큰 것만 줄임(축소만, 확대 금지). */
+    .item-pic img.phone-sq,
     .item-pic img.phone-wide {
       width: auto;
-      max-width: 280px;
       height: auto;
-      max-height: 72px;
+      max-width: 100%;
+      max-height: none;
       object-fit: contain;
       display: block;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      image-rendering: pixelated;
     }
     .item-pic .credit-phone {
       display: flex;
@@ -625,7 +623,7 @@
         text.appendChild(descEl);
         itemEl.appendChild(text);
 
-        // B. 그림 칸 (핸드폰에 넣는 크기 · 설명과 옆이 아님)
+        // B. 그림 칸 (설명과 분리 · 원본 픽셀 크기)
         var pic = document.createElement("div");
         pic.className = "item-pic";
         if (item.novelCredit) {
@@ -673,6 +671,12 @@
           img.alt = item.name || "";
           img.draggable = false;
           img.className = item.wide ? "phone-wide" : "phone-sq";
+          // 브라우저가 원본 크기로 그리도록 width/height 속성도 맞춤(확대 방지)
+          img.onload = function () {
+            if (!img.naturalWidth) return;
+            img.width = img.naturalWidth;
+            img.height = img.naturalHeight;
+          };
           pic.appendChild(img);
         }
         itemEl.appendChild(pic);
