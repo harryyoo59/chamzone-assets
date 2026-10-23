@@ -225,12 +225,34 @@
       word-break: keep-all;
     }
     .label {
-      font-size: 11px;
-      text-align: center;
-      color: var(--muted);
-      word-break: break-all;
-      line-height: 1.3;
+      width: 100%;
+      text-align: left;
+      color: var(--ink);
+      word-break: keep-all;
+      line-height: 1.35;
+      padding: 0 2px;
     }
+    .label .code {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--pick);
+      margin-right: 4px;
+    }
+    .label .name {
+      display: inline;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .label .desc {
+      display: block;
+      margin-top: 4px;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+    .tile.wide-tile .label { text-align: left; }
     .bar {
       position: sticky;
       bottom: 0;
@@ -266,7 +288,7 @@
         <h1>아이콘 창고</h1>
         <button type="button" class="btn-refresh" id="btnRefresh">새로고침</button>
       </div>
-      <p class="sub">칸을 고른 뒤 그림을 누르세요. 창은 그대로 둡니다.</p>
+      <p class="sub">번호로 고르세요. 예: 「삼02」·「회01」. 창은 그대로 둡니다.</p>
       <nav class="tabs" id="tabs"></nav>
     </header>
     <main id="main"><p class="hint">위에서 칸을 고르세요</p></main>
@@ -302,7 +324,9 @@
         title: "회사",
         items: [
           {
-            label: "소설가와 같은 회사 로고",
+            code: "회01",
+            name: "소설가와 같은 회사 로고",
+            desc: "파란 용과 ChamZone 회사명을 나란히 붙인 짝입니다. 소설가 사이트 맨 아래 credit에 쓰는 그 모습 그대로, 회사 소개·푸터·신용 표시에 넣으면 됩니다.",
             path: "company/chamzone-icon.png + company/chamzone-logo.png",
             wide: true,
             novelCredit: true,
@@ -310,7 +334,9 @@
             logoSrc: "company/chamzone-logo.png"
           },
           {
-            label: "로고+다른앱 둘러보기",
+            code: "회02",
+            name: "로고+다른앱 둘러보기",
+            desc: "왼쪽에 회사 로고, 오른쪽에 「개발자가 만든 다른앱 둘러보기」 버튼이 있는 한 줄입니다. 앱 로비나 소개 화면 아래에서 다른 앱으로 안내할 때 씁니다.",
             path: "company/logo-plus-other-apps-button",
             wide: true,
             logoPlusApps: true,
@@ -318,56 +344,177 @@
             logoSrc: "company/chamzone-logo.png",
             buttonLabel: "개발자가 만든 다른앱 둘러보기"
           },
-          { label: "용 아이콘만 (복사본)", src: "company/chamzone-icon.png", path: "company/chamzone-icon.png" },
-          { label: "회사명 글자만 (복사본)", src: "company/chamzone-logo.png", path: "company/chamzone-logo.png", wide: true }
+          {
+            code: "회03",
+            name: "용 아이콘만",
+            desc: "파란 용 마크만 있는 그림입니다. 정사각 앱 아이콘·작은 배지·프로필처럼 글자 없이 상징만 넣을 때 씁니다.",
+            src: "company/chamzone-icon.png",
+            path: "company/chamzone-icon.png"
+          },
+          {
+            code: "회04",
+            name: "회사명 글자만",
+            desc: "ChamZone Interactive 글자만 있는 그림입니다. 헤더·명함·문서처럼 회사 이름 글자만 필요할 때 씁니다.",
+            src: "company/chamzone-logo.png",
+            path: "company/chamzone-logo.png",
+            wide: true
+          }
         ]
       },
       {
         id: "samguk",
         title: "삼국지",
         items: [
-          { label: "게임 아이콘", src: "apps/samguk/game-icon.jpg", path: "apps/samguk/game-icon.jpg" },
-          { label: "icon-192", src: "apps/samguk/icon-192.png", path: "apps/samguk/icon-192.png" },
-          { label: "icon-512", src: "apps/samguk/icon-512.png", path: "apps/samguk/icon-512.png" }
+          {
+            code: "삼01",
+            name: "게임 아이콘",
+            desc: "전략 삼국지 대표 그림입니다. 로그인 화면·브라우저 탭·앱 바로가기에 가장 자주 쓰는 본 아이콘입니다.",
+            src: "apps/samguk/game-icon.jpg",
+            path: "apps/samguk/game-icon.jpg"
+          },
+          {
+            code: "삼02",
+            name: "중간 아이콘",
+            desc: "한 변이 192칸인 중간 크기입니다. 폰 홈 화면·웹앱 목록처럼 중간 크기가 필요할 때 씁니다.",
+            src: "apps/samguk/icon-192.png",
+            path: "apps/samguk/icon-192.png"
+          },
+          {
+            code: "삼03",
+            name: "큰 아이콘",
+            desc: "한 변이 512칸인 큰 그림입니다. 앱 설치·스토어·고해상도 미리보기처럼 크게 선명해야 할 때 씁니다.",
+            src: "apps/samguk/icon-512.png",
+            path: "apps/samguk/icon-512.png"
+          }
         ]
       },
       {
         id: "novel",
         title: "소설",
         items: [
-          { label: "favicon", src: "apps/novel/favicon.ico", path: "apps/novel/favicon.ico" },
-          { label: "favicon-32", src: "apps/novel/favicon-32.png", path: "apps/novel/favicon-32.png" },
-          { label: "apple-touch", src: "apps/novel/apple-touch-icon.png", path: "apps/novel/apple-touch-icon.png" },
-          { label: "icon-192", src: "apps/novel/icon-192.png", path: "apps/novel/icon-192.png" },
-          { label: "icon-512", src: "apps/novel/icon-512.png", path: "apps/novel/icon-512.png" }
+          {
+            code: "소01",
+            name: "탭 아이콘",
+            desc: "브라우저 탭 구석에 붙는 아주 작은 아이콘입니다. 주소창 옆·즐겨찾기 목록에 소설가 사이트를 알아볼 때 씁니다.",
+            src: "apps/novel/favicon.ico",
+            path: "apps/novel/favicon.ico"
+          },
+          {
+            code: "소02",
+            name: "탭 아이콘(PNG)",
+            desc: "탭용 작은 아이콘을 PNG로 둔 것입니다. 아이콘(ico) 대신 PNG가 필요한 곳(일부 설정·미리보기)에 씁니다.",
+            src: "apps/novel/favicon-32.png",
+            path: "apps/novel/favicon-32.png"
+          },
+          {
+            code: "소03",
+            name: "아이폰 홈",
+            desc: "아이폰 홈 화면에 「홈 화면에 추가」할 때 쓰는 아이콘입니다. 사파리에서 앱처럼 보이게 꽂을 때 씁니다.",
+            src: "apps/novel/apple-touch-icon.png",
+            path: "apps/novel/apple-touch-icon.png"
+          },
+          {
+            code: "소04",
+            name: "중간 아이콘",
+            desc: "192칸 중간 크기입니다. 폰·웹앱에서 소설가 앱 아이콘을 보통 크기로 보여줄 때 씁니다.",
+            src: "apps/novel/icon-192.png",
+            path: "apps/novel/icon-192.png"
+          },
+          {
+            code: "소05",
+            name: "큰 아이콘",
+            desc: "512칸 큰 그림입니다. 설치 화면·큰 미리보기처럼 선명하게 크게 보여야 할 때 씁니다.",
+            src: "apps/novel/icon-512.png",
+            path: "apps/novel/icon-512.png"
+          }
         ]
       },
       {
         id: "health",
         title: "건강",
         items: [
-          { label: "icon-180", src: "apps/health/icon-180.png", path: "apps/health/icon-180.png" },
-          { label: "apple-touch", src: "apps/health/apple-touch-icon.png", path: "apps/health/apple-touch-icon.png" },
-          { label: "icon-192", src: "apps/health/icon-192.png", path: "apps/health/icon-192.png" },
-          { label: "icon-512", src: "apps/health/icon-512.png", path: "apps/health/icon-512.png" },
-          { label: "maskable-512", src: "apps/health/icon-maskable-512.png", path: "apps/health/icon-maskable-512.png" }
+          {
+            code: "건01",
+            name: "아이콘 180",
+            desc: "180칸 크기입니다. 건강 앱을 중간~아이폰에 가까운 크기로 넣을 때 씁니다.",
+            src: "apps/health/icon-180.png",
+            path: "apps/health/icon-180.png"
+          },
+          {
+            code: "건02",
+            name: "아이폰 홈",
+            desc: "아이폰 홈 화면에 건강 앱을 추가할 때 쓰는 아이콘입니다.",
+            src: "apps/health/apple-touch-icon.png",
+            path: "apps/health/apple-touch-icon.png"
+          },
+          {
+            code: "건03",
+            name: "중간 아이콘",
+            desc: "192칸 중간 크기입니다. 폰 홈·웹앱 목록에 건강 앱을 보통 크기로 보여줄 때 씁니다.",
+            src: "apps/health/icon-192.png",
+            path: "apps/health/icon-192.png"
+          },
+          {
+            code: "건04",
+            name: "큰 아이콘",
+            desc: "512칸 큰 그림입니다. 설치·큰 미리보기용입니다.",
+            src: "apps/health/icon-512.png",
+            path: "apps/health/icon-512.png"
+          },
+          {
+            code: "건05",
+            name: "안드로이드용 큰 아이콘",
+            desc: "안드로이드 홈에서 모서리가 잘려도 가운데 그림이 남도록 여백을 둔 큰 아이콘입니다. 안드로이드 앱 아이콘으로 쓸 때 고릅니다.",
+            src: "apps/health/icon-maskable-512.png",
+            path: "apps/health/icon-maskable-512.png"
+          }
         ]
       },
       {
         id: "tour",
         title: "투어",
         items: [
-          { label: "favicon-180", src: "apps/tour/favicon-180.png", path: "apps/tour/favicon-180.png" },
-          { label: "apple-touch", src: "apps/tour/apple-touch-icon.png", path: "apps/tour/apple-touch-icon.png" },
-          { label: "icon-512", src: "apps/tour/icon-512.png", path: "apps/tour/icon-512.png" }
+          {
+            code: "투01",
+            name: "아이콘 180",
+            desc: "180칸 크기입니다. 시드니 투어 앱을 중간 크기로 넣을 때 씁니다.",
+            src: "apps/tour/favicon-180.png",
+            path: "apps/tour/favicon-180.png"
+          },
+          {
+            code: "투02",
+            name: "아이폰 홈",
+            desc: "아이폰 홈 화면에 투어 앱을 추가할 때 쓰는 아이콘입니다.",
+            src: "apps/tour/apple-touch-icon.png",
+            path: "apps/tour/apple-touch-icon.png"
+          },
+          {
+            code: "투03",
+            name: "큰 아이콘",
+            desc: "512칸 큰 그림입니다. 설치·큰 미리보기용입니다.",
+            src: "apps/tour/icon-512.png",
+            path: "apps/tour/icon-512.png"
+          }
         ]
       },
       {
         id: "emoji",
         title: "이모지",
         items: [
-          { label: "cheer-heart.gif", src: "emoji/cheer-heart.gif", path: "emoji/cheer-heart.gif" },
-          { label: "cheer-heart.webp", src: "emoji/cheer-heart.webp", path: "emoji/cheer-heart.webp" }
+          {
+            code: "이01",
+            name: "응원 하트(GIF)",
+            desc: "움직이는 하트 응원 그림입니다. 채팅·댓글·축하 장면에 GIF가 필요할 때 씁니다.",
+            src: "emoji/cheer-heart.gif",
+            path: "emoji/cheer-heart.gif"
+          },
+          {
+            code: "이02",
+            name: "응원 하트(WebP)",
+            desc: "같은 하트 응원을 WebP로 둔 것입니다. 용량을 줄여 사이트에 넣을 때 씁니다.",
+            src: "emoji/cheer-heart.webp",
+            path: "emoji/cheer-heart.webp"
+          }
         ]
       },
       {
@@ -425,6 +572,24 @@
         check.textContent = "✓";
 
         tile.appendChild(check);
+
+        // 번호 · 쉬운 이름 · 자세한 설명 → 그다음 그림
+        var lab = document.createElement("div");
+        lab.className = "label";
+        var codeEl = document.createElement("span");
+        codeEl.className = "code";
+        codeEl.textContent = item.code || "";
+        var nameEl = document.createElement("span");
+        nameEl.className = "name";
+        nameEl.textContent = " · " + (item.name || "");
+        var descEl = document.createElement("span");
+        descEl.className = "desc";
+        descEl.textContent = item.desc || "";
+        lab.appendChild(codeEl);
+        lab.appendChild(nameEl);
+        lab.appendChild(descEl);
+        tile.appendChild(lab);
+
         if (item.novelCredit) {
           var row = document.createElement("div");
           row.className = "novel-credit-row";
@@ -438,7 +603,7 @@
           var logo = document.createElement("img");
           logo.className = "novel-credit-logo";
           logo.src = item.logoSrc;
-          logo.alt = item.label;
+          logo.alt = item.name || "";
           logo.width = 200;
           logo.height = 36;
           logo.draggable = false;
@@ -474,22 +639,18 @@
         } else {
           var img = document.createElement("img");
           img.src = item.src;
-          img.alt = item.label;
+          img.alt = item.name || "";
           img.className = item.wide ? "wide" : "sq";
           img.draggable = false;
           tile.appendChild(img);
         }
 
-        var lab = document.createElement("div");
-        lab.className = "label";
-        lab.textContent = item.label;
-        tile.appendChild(lab);
         tile.addEventListener("click", function (e) {
           e.preventDefault();
           e.stopPropagation();
           selectedPath = item.path;
-          selName.textContent = item.label;
-          selPath.textContent = item.path;
+          selName.textContent = (item.code || "") + " · " + (item.name || "");
+          selPath.textContent = (item.desc || "") + " · " + (item.path || "");
           showSection(current);
         });
         grid.appendChild(tile);
@@ -497,11 +658,11 @@
       main.appendChild(grid);
     }
 
-    // 시작 시 회사 칸 · 소설가 복사본 로고
+    // 시작 시 회사 칸 · 회01
     showSection("company");
     selectedPath = "company/chamzone-icon.png + company/chamzone-logo.png";
-    selName.textContent = "소설가와 같은 회사 로고";
-    selPath.textContent = "company/chamzone-icon.png + company/chamzone-logo.png (소설가 원본 복사)";
+    selName.textContent = "회01 · 소설가와 같은 회사 로고";
+    selPath.textContent = "회사 탭에서 「회01」이라고 부르면 됩니다.";
     showSection("company");
   </script>
 </body>
