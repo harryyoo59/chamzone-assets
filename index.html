@@ -185,26 +185,27 @@
       background: #fff;
       border: 2px solid var(--line);
       border-radius: 12px;
-      padding: 14px 12px;
+      padding: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 120px;
+      min-height: 0;
       -webkit-user-select: none;
       user-select: none;
     }
+    /* 핸드폰에 넣는 크기 — 창고를 꽉 채우는 거대 미리보기 금지 */
     .item-pic img.phone-sq {
-      width: 192px;
-      height: 192px;
-      max-width: 100%;
+      width: 96px;
+      height: 96px;
+      max-width: 96px;
       object-fit: contain;
       display: block;
     }
     .item-pic img.phone-wide {
-      width: 100%;
-      max-width: 320px;
+      width: auto;
+      max-width: 280px;
       height: auto;
-      max-height: 120px;
+      max-height: 72px;
       object-fit: contain;
       display: block;
     }
@@ -212,59 +213,59 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      width: 100%;
-      max-width: 320px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: #fff;
+      gap: 6px;
+      width: auto;
+      max-width: 280px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #f7f7f7;
     }
     .item-pic .credit-phone img.i {
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
       flex-shrink: 0;
       object-fit: contain;
     }
     .item-pic .credit-phone img.l {
-      height: 36px;
+      height: 28px;
       width: auto;
-      max-width: calc(100% - 48px);
+      max-width: 200px;
       object-fit: contain;
     }
     .item-pic .apps-phone {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       width: 100%;
-      max-width: 320px;
+      max-width: 300px;
     }
     .item-pic .apps-phone .apps-mark {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       flex-shrink: 0;
     }
     .item-pic .apps-phone .apps-mark img.i {
-      width: 40px;
-      height: 40px;
+      width: 28px;
+      height: 28px;
       object-fit: contain;
     }
     .item-pic .apps-phone .apps-mark img.l {
-      height: 36px;
+      height: 24px;
       width: auto;
-      max-width: 110px;
+      max-width: 90px;
       object-fit: contain;
     }
     .item-pic .apps-phone .btn {
       flex: 1 1 auto;
-      min-height: 48px;
-      padding: 10px 12px;
+      min-height: 40px;
+      padding: 8px 10px;
       border-radius: 10px;
       background: #1a5cff;
       color: #fff;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
-      line-height: 1.35;
+      line-height: 1.3;
       text-align: center;
       word-break: keep-all;
     }
@@ -352,8 +353,8 @@
           },
           {
             code: "회02",
-            name: "로고+다른앱 둘러보기",
-            desc: "왼쪽에 회사 로고, 오른쪽에 「개발자가 만든 다른앱 둘러보기」 버튼이 있는 한 줄입니다. 앱 로비나 소개 화면 아래에서 다른 앱으로 안내할 때 씁니다.",
+            name: "사이트 바로가기",
+            desc: "왼쪽에 회사 로고, 오른쪽에 「개발자가 만든 다른앱 둘러보기」 버튼이 있는 한 줄입니다. 사이트·앱 로비 아래에서 다른 사이트로 바로 안내할 때 씁니다. (예전에 「로고+다른앱 둘러보기」로도 불리던 칸)",
             path: "company/logo-plus-other-apps-button",
             wide: true,
             logoPlusApps: true,
@@ -677,7 +678,7 @@
           var apps = document.createElement("div");
           apps.className = "apps-phone";
           var mk = document.createElement("div");
-          mk.className = "mark";
+          mk.className = "apps-mark";
           var ai = document.createElement("img");
           ai.className = "i";
           ai.src = item.iconSrc;
