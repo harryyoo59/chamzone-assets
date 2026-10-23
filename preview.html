@@ -113,96 +113,160 @@
       padding: 24px 8px;
       text-align: center;
     }
-    /* 한 줄 = 한 항목 · 왼쪽 글 · 오른쪽 썸네일 */
+    /* 항목마다: 설명 칸(위) → 그림 칸(아래, 핸드폰 넣는 크기) · 옆으로 붙이지 않음 */
     .list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 18px;
       width: 100%;
     }
-    .row {
+    .item {
       width: 100%;
-      max-width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .item.on .item-text {
+      border-color: var(--pick);
+      background: #f5f8ff;
+    }
+    .item.on .item-pic {
+      border-color: var(--pick);
+    }
+    .item-text {
+      width: 100%;
       box-sizing: border-box;
       background: var(--card);
       border: 2px solid var(--line);
       border-radius: 12px;
-      padding: 10px;
+      padding: 12px 12px;
+    }
+    .item-title {
       display: flex;
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 10px;
-      text-align: left;
-    }
-    .row.on {
-      border-color: var(--pick);
-      background: #f5f8ff;
-    }
-    .row-text {
-      flex: 1 1 0;
-      min-width: 0;
-      max-width: calc(100% - 82px);
-      padding-top: 2px;
-    }
-    .row-top {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       align-items: baseline;
       gap: 6px;
-      margin-bottom: 4px;
-      min-width: 0;
+      margin-bottom: 6px;
+      line-height: 1.35;
     }
-    .row-top .code {
-      flex: 0 0 auto;
-      font-size: 15px;
+    .item-title .code {
+      font-size: 16px;
       font-weight: 800;
       color: var(--pick);
       white-space: nowrap;
     }
-    .row-top .name {
-      flex: 1 1 auto;
-      min-width: 0;
-      font-size: 14px;
+    .item-title .name {
+      font-size: 15px;
       font-weight: 700;
       color: var(--ink);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      word-break: keep-all;
     }
-    .row-top .mark {
+    .item-title .mark {
       display: none;
-      flex: 0 0 auto;
       color: var(--pick);
       font-size: 14px;
       font-weight: 800;
     }
-    .row.on .row-top .mark { display: inline; }
-    .row-desc {
-      font-size: 12px;
+    .item.on .item-title .mark { display: inline; }
+    .item-desc {
+      font-size: 13px;
       font-weight: 400;
       color: var(--muted);
       line-height: 1.45;
       word-break: keep-all;
-      overflow-wrap: anywhere;
     }
-    .row-thumb {
-      flex: 0 0 72px;
-      width: 72px;
-      height: 72px;
-      border-radius: 10px;
-      background: #f0eeeb;
-      border: 1px solid var(--line);
+    .item-pic {
+      width: 100%;
+      box-sizing: border-box;
+      background: #fff;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      padding: 14px 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
+      min-height: 120px;
+      -webkit-user-select: none;
+      user-select: none;
     }
-    .row-thumb img {
-      width: 100%;
-      height: 100%;
+    .item-pic img.phone-sq {
+      width: 192px;
+      height: 192px;
+      max-width: 100%;
       object-fit: contain;
       display: block;
+    }
+    .item-pic img.phone-wide {
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      max-height: 120px;
+      object-fit: contain;
+      display: block;
+    }
+    .item-pic .credit-phone {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 320px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #fff;
+    }
+    .item-pic .credit-phone img.i {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      object-fit: contain;
+    }
+    .item-pic .credit-phone img.l {
+      height: 36px;
+      width: auto;
+      max-width: calc(100% - 48px);
+      object-fit: contain;
+    }
+    .item-pic .apps-phone {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 320px;
+    }
+    .item-pic .apps-phone .mark {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .item-pic .apps-phone .mark img.i {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+    }
+    .item-pic .apps-phone .mark img.l {
+      height: 36px;
+      width: auto;
+      max-width: 110px;
+      object-fit: contain;
+    }
+    .item-pic .apps-phone .btn {
+      flex: 1 1 auto;
+      min-height: 48px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #1a5cff;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.35;
+      text-align: center;
+      word-break: keep-all;
     }
     .bar {
       flex: 0 0 auto;
@@ -561,16 +625,16 @@
       var list = document.createElement("div");
       list.className = "list";
       sec.items.forEach(function (item) {
-        var row = document.createElement("button");
-        row.type = "button";
-        row.className = "row";
-        if (selectedPath === item.path) row.classList.add("on");
+        var itemEl = document.createElement("button");
+        itemEl.type = "button";
+        itemEl.className = "item";
+        if (selectedPath === item.path) itemEl.classList.add("on");
 
-        // 왼쪽: 번호 + 이름 + 설명
+        // A. 설명 칸 (글만)
         var text = document.createElement("div");
-        text.className = "row-text";
-        var top = document.createElement("div");
-        top.className = "row-top";
+        text.className = "item-text";
+        var title = document.createElement("div");
+        title.className = "item-title";
         var codeEl = document.createElement("span");
         codeEl.className = "code";
         codeEl.textContent = item.code || "";
@@ -580,32 +644,69 @@
         var mark = document.createElement("span");
         mark.className = "mark";
         mark.textContent = "✓";
-        top.appendChild(codeEl);
-        top.appendChild(nameEl);
-        top.appendChild(mark);
+        title.appendChild(codeEl);
+        title.appendChild(nameEl);
+        title.appendChild(mark);
         var descEl = document.createElement("div");
-        descEl.className = "row-desc";
+        descEl.className = "item-desc";
         descEl.textContent = item.desc || "";
-        text.appendChild(top);
+        text.appendChild(title);
         text.appendChild(descEl);
-        row.appendChild(text);
+        itemEl.appendChild(text);
 
-        // 오른쪽: 고정 크기 미리보기 (한 장만 — 깨진 scale/겹침 없음)
-        var thumb = document.createElement("div");
-        thumb.className = "row-thumb";
-        var img = document.createElement("img");
-        img.draggable = false;
-        img.alt = item.name || "";
-        if (item.novelCredit || item.logoPlusApps) {
-          // 합쳐 보이는 칸도 썸네일은 용 아이콘 원본만 (레이아웃 안정)
-          img.src = item.iconSrc;
+        // B. 그림 칸 (핸드폰에 넣는 크기 · 설명과 옆이 아님)
+        var pic = document.createElement("div");
+        pic.className = "item-pic";
+        if (item.novelCredit) {
+          var credit = document.createElement("div");
+          credit.className = "credit-phone";
+          var ci = document.createElement("img");
+          ci.className = "i";
+          ci.src = item.iconSrc;
+          ci.alt = "";
+          ci.draggable = false;
+          var cl = document.createElement("img");
+          cl.className = "l";
+          cl.src = item.logoSrc;
+          cl.alt = item.name || "";
+          cl.draggable = false;
+          credit.appendChild(ci);
+          credit.appendChild(cl);
+          pic.appendChild(credit);
+        } else if (item.logoPlusApps) {
+          var apps = document.createElement("div");
+          apps.className = "apps-phone";
+          var mk = document.createElement("div");
+          mk.className = "mark";
+          var ai = document.createElement("img");
+          ai.className = "i";
+          ai.src = item.iconSrc;
+          ai.alt = "";
+          ai.draggable = false;
+          var al = document.createElement("img");
+          al.className = "l";
+          al.src = item.logoSrc;
+          al.alt = "";
+          al.draggable = false;
+          mk.appendChild(ai);
+          mk.appendChild(al);
+          var btn = document.createElement("span");
+          btn.className = "btn";
+          btn.textContent = item.buttonLabel || "개발자가 만든 다른앱 둘러보기";
+          apps.appendChild(mk);
+          apps.appendChild(btn);
+          pic.appendChild(apps);
         } else {
+          var img = document.createElement("img");
           img.src = item.src;
+          img.alt = item.name || "";
+          img.draggable = false;
+          img.className = item.wide ? "phone-wide" : "phone-sq";
+          pic.appendChild(img);
         }
-        thumb.appendChild(img);
-        row.appendChild(thumb);
+        itemEl.appendChild(pic);
 
-        row.addEventListener("click", function (e) {
+        itemEl.addEventListener("click", function (e) {
           e.preventDefault();
           e.stopPropagation();
           selectedPath = item.path;
@@ -613,7 +714,7 @@
           selPath.textContent = item.desc || "";
           showSection(current);
         });
-        list.appendChild(row);
+        list.appendChild(itemEl);
       });
       main.appendChild(list);
     }
