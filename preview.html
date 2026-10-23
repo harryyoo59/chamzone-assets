@@ -107,152 +107,122 @@
       padding: 24px 8px;
       text-align: center;
     }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+    /* 한 줄에 하나씩 · 가로 배치 */
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
-    .tile {
+    .row {
+      width: 100%;
+      box-sizing: border-box;
       background: var(--card);
       border: 2px solid transparent;
       border-radius: 12px;
-      padding: 8px 6px 10px;
+      padding: 10px 10px;
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
-      gap: 6px;
-      min-height: 120px;
+      gap: 10px;
+      min-height: 72px;
+      text-align: left;
       position: relative;
     }
-    .tile.on {
+    .row.on {
       border-color: var(--pick);
       box-shadow: 0 0 0 1px var(--pick);
     }
-    .tile .check {
+    .row .check {
       display: none;
       position: absolute;
       top: 6px;
       right: 8px;
-      font-size: 14px;
+      font-size: 13px;
       color: var(--pick);
       font-weight: 700;
     }
-    .tile.on .check { display: block; }
-    .tile img.sq {
-      width: var(--icon);
-      height: var(--icon);
-      object-fit: contain;
-    }
-    .tile img.wide {
-      width: 100%;
-      max-width: 320px;
-      height: auto;
-      max-height: 100px;
-      object-fit: contain;
-    }
-    .tile.wide-tile {
-      grid-column: 1 / -1;
-      min-height: auto;
-    }
-    /* 소설가 ProjectNL credit와 동일 배치 — 그림은 복사본만, 크기 재가공 없음 */
-    .novel-credit-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      max-width: 300px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: #fff;
-      box-sizing: border-box;
-    }
-    .novel-credit-icon {
-      display: block;
-      width: 40px;
-      height: 40px;
-      flex-shrink: 0;
-      object-fit: contain;
-    }
-    .novel-credit-logo {
-      display: block;
-      flex: 1 1 auto;
-      width: auto;
-      max-width: calc(100% - 48px);
-      height: 36px;
-      object-fit: contain;
-      object-position: left center;
-    }
-    /* 원본 로고(왼쪽) + 우측 빈 공간에 버튼 */
-    .logo-apps-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: 100%;
-      box-sizing: border-box;
-      padding: 10px 8px;
-      border-radius: 12px;
-      background: #fff;
-    }
-    .logo-apps-mark {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-    .logo-apps-mark .novel-credit-icon {
-      width: 40px;
-      height: 40px;
-    }
-    .logo-apps-mark .novel-credit-logo {
-      width: auto;
-      max-width: 120px;
-      height: 36px;
-      flex: 0 0 auto;
-    }
-    .logo-apps-btn {
+    .row.on .check { display: block; }
+    .row-text {
       flex: 1 1 auto;
       min-width: 0;
-      min-height: 48px;
-      padding: 10px 12px;
-      border-radius: 10px;
-      background: #1a5cff;
-      color: #fff;
-      font-size: 13px;
-      font-weight: 700;
-      line-height: 1.35;
-      text-align: center;
-      word-break: keep-all;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
     }
-    .label {
-      width: 100%;
-      text-align: left;
-      color: var(--ink);
-      word-break: keep-all;
-      line-height: 1.35;
-      padding: 0 2px;
+    .row-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 6px;
+      line-height: 1.3;
     }
-    .label .code {
-      display: inline-block;
-      font-size: 14px;
+    .row-top .code {
+      font-size: 15px;
       font-weight: 800;
       color: var(--pick);
-      margin-right: 4px;
+      flex-shrink: 0;
     }
-    .label .name {
-      display: inline;
-      font-size: 13px;
+    .row-top .name {
+      font-size: 14px;
       font-weight: 700;
+      color: var(--ink);
     }
-    .label .desc {
-      display: block;
-      margin-top: 4px;
+    .row-desc {
       font-size: 12px;
       font-weight: 400;
       color: var(--muted);
       line-height: 1.4;
+      word-break: keep-all;
     }
-    .tile.wide-tile .label { text-align: left; }
+    .row-thumb {
+      flex-shrink: 0;
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+      background: #f3f3f3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .row-thumb img {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+    .row-thumb.wide-thumb {
+      width: 110px;
+      height: 56px;
+    }
+    .row-thumb .mini-credit {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      transform: scale(0.55);
+      transform-origin: center;
+    }
+    .row-thumb .mini-credit img.i { width: 40px; height: 40px; }
+    .row-thumb .mini-credit img.l { height: 36px; width: auto; max-width: 120px; }
+    .row-thumb .mini-apps {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px;
+    }
+    .row-thumb .mini-apps img.i { width: 22px; height: 22px; }
+    .row-thumb .mini-apps .b {
+      font-size: 7px;
+      font-weight: 700;
+      background: #1a5cff;
+      color: #fff;
+      padding: 3px 4px;
+      border-radius: 4px;
+      line-height: 1.2;
+      max-width: 70px;
+      word-break: keep-all;
+    }
     .bar {
       position: sticky;
       bottom: 0;
