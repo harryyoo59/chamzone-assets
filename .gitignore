@@ -5,3 +5,6 @@ pin-vault.swift
 *.command
 *.log
 .vercel
+
+screenshots/
+

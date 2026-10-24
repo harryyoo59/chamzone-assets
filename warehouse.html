@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=390, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>아이콘 창고</title>
+  <style>
+    :root {
+      --w: 390px;
+      --icon: 88px;
+      --bg: #f6f4f1;
+      --card: #fff;
+      --ink: #1a1a1a;
+      --muted: #666;
+      --line: #ddd;
+      --pick: #1a5cff;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #e8e6e3;
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+      -webkit-user-select: none;
+      user-select: none;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    button {
+      font: inherit;
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+      color: inherit;
+    }
+    .phone {
+      width: var(--w);
+      max-width: 100%;
+      min-height: 100vh;
+      max-height: 100vh;
+      margin: 0 auto;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    header {
+      padding: 16px 16px 10px;
+      background: var(--card);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+    h1 {
+      margin: 0 0 4px;
+      font-size: 18px;
+    }
+    .sub {
+      margin: 0 0 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .head-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+    .head-row h1 { margin: 0; }
+    .btn-refresh {
+      flex-shrink: 0;
+      padding: 10px 14px;
+      min-height: 44px;
+      border-radius: 10px;
+      background: #1a5cff;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .btn-refresh:active { opacity: 0.85; }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .tab {
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: #eee;
+      font-size: 13px;
+    }
+    .tab.on {
+      background: var(--ink);
+      color: #fff;
+    }
+    main {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 12px 12px 16px;
+    }
+    .hint {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 24px 8px;
+      text-align: center;
+    }
+    /* 항목마다: 설명 칸(위) → 그림 칸(아래, 핸드폰 넣는 크기) · 옆으로 붙이지 않음 */
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      width: 100%;
+    }
+    .item {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    .item.on .item-text {
+      border-color: var(--pick);
+      background: #f5f8ff;
+    }
+    .item.on .item-pic {
+      border-color: var(--pick);
+    }
+    .item-text {
+      width: 100%;
+      box-sizing: border-box;
+      background: var(--card);
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      padding: 12px 12px;
+    }
+    .item-title {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 6px;
+      line-height: 1.35;
+    }
+    .item-title .code {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--pick);
+      white-space: nowrap;
+    }
+    .item-title .name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ink);
+      word-break: keep-all;
+    }
+    .item-title .mark {
+      display: none;
+      color: var(--pick);
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .item.on .item-title .mark { display: inline; }
+    .item-desc {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--muted);
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+    .item-pic {
+      width: 100%;
+      box-sizing: border-box;
+      background: #fff;
+      border: 2px solid var(--line);
+      border-radius: 12px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    /* 원본 픽셀 크기 그대로 — 작은 아이콘을 키워서 흐리게 만들지 않음.
+       화면(약 390)보다 큰 것만 줄임(축소만, 확대 금지). */
+    .item-pic img.phone-sq,
+    .item-pic img.phone-wide {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: none;
+      object-fit: contain;
+      display: block;
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+      image-rendering: pixelated;
+    }
+    .item-pic .credit-phone {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: auto;
+      max-width: 280px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #f7f7f7;
+    }
+    .item-pic .credit-phone img.i {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      object-fit: contain;
+    }
+    .item-pic .credit-phone img.l {
+      height: 28px;
+      width: auto;
+      max-width: 200px;
+      object-fit: contain;
+    }
+    .item-pic .apps-phone {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      max-width: 300px;
+    }
+    .item-pic .apps-phone .apps-mark {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .item-pic .apps-phone .apps-mark img.i {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+    .item-pic .apps-phone .apps-mark img.l {
+      height: 24px;
+      width: auto;
+      max-width: 90px;
+      object-fit: contain;
+    }
+    .item-pic .apps-phone .btn {
+      flex: 1 1 auto;
+      min-height: 40px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #1a5cff;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.3;
+      text-align: center;
+      word-break: keep-all;
+    }
+    .bar {
+      flex: 0 0 auto;
+      background: var(--card);
+      border-top: 1px solid var(--line);
+      padding: 12px 14px 18px;
+    }
+    .bar .t {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .bar .name {
+      font-size: 15px;
+      font-weight: 600;
+      word-break: keep-all;
+    }
+    .bar .path {
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--muted);
+      word-break: keep-all;
+      -webkit-user-select: text;
+      user-select: text;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <header>
+      <div class="head-row">
+        <h1>아이콘 창고</h1>
+        <div style="display:flex;gap:8px;align-items:center;flex-shrink:0">
+          <a href="/" style="padding:10px 12px;min-height:44px;display:inline-flex;align-items:center;border-radius:10px;background:#eee;font-size:14px;font-weight:700">회사 홈</a>
+          <button type="button" class="btn-refresh" id="btnRefresh">새로고침</button>
+        </div>
+      </div>
+      <p class="sub">번호로 고르세요. 예: 「삼02」·「회01」. 창은 그대로 둡니다.</p>
+      <nav class="tabs" id="tabs"></nav>
+    </header>
+    <main id="main"><p class="hint">위에서 칸을 고르세요</p></main>
+    <div class="bar">
+      <div class="t">선택한 그림</div>
+      <div class="name" id="selName">아직 없음</div>
+      <div class="path" id="selPath"></div>
+    </div>
+  </div>
+  <script>
+    // 클릭해도 페이지·창이 닫히거나 이동하지 않게 고정
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest("a");
+      if (a) {
+        var href = a.getAttribute("href") || "";
+        if (href === "/" || href.indexOf("index.html") !== -1) return;
+        e.preventDefault();
+      }
+    }, true);
+    document.addEventListener("submit", function (e) {
+      e.preventDefault();
+    }, true);
+
+    document.getElementById("btnRefresh").addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var u = new URL(window.location.href);
+      u.searchParams.set("r", String(Date.now()));
+      window.location.replace(u.toString());
+    });
+
+    var SECTIONS = [
+      {
+        id: "company",
+        title: "회사",
+        items: [
+          {
+            code: "회01",
+            name: "용 그림만",
+            desc: "파란 용 마크만 있는 원본입니다. 앱 아이콘·배지·프로필처럼 글자 없이 상징만 넣을 때 씁니다.",
+            src: "company/chamzone-icon.png",
+            path: "company/chamzone-icon.png"
+          },
+          {
+            code: "회02",
+            name: "회사 이름만",
+            desc: "ChamZone Interactive 글자만 있는 원본입니다. 헤더·명함·문서처럼 회사 이름 글자만 필요할 때 씁니다.",
+            src: "company/chamzone-logo.png",
+            path: "company/chamzone-logo.png",
+            wide: true
+          },
+          {
+            code: "회03",
+            name: "용+회사 이름 같이",
+            desc: "용 그림과 회사 이름을 나란히 붙인 짝입니다. 소설가 사이트 맨 아래 credit과 같은 모습으로, 회사 소개·푸터에 씁니다.",
+            path: "company/chamzone-icon.png + company/chamzone-logo.png",
+            wide: true,
+            novelCredit: true,
+            iconSrc: "company/chamzone-icon.png",
+            logoSrc: "company/chamzone-logo.png"
+          },
+          {
+            code: "회04",
+            name: "로고+다른앱 둘러보기",
+            desc: "왼쪽에 회사 로고(용+회사명), 오른쪽에 「개발자가 만든 다른앱 둘러보기」 버튼이 있는 한 줄입니다. 앱 로비나 소개 화면 아래에서 다른 앱으로 안내할 때 씁니다.",
+            path: "company/logo-plus-other-apps-button",
+            wide: true,
+            logoPlusApps: true,
+            iconSrc: "company/chamzone-icon.png",
+            logoSrc: "company/chamzone-logo.png",
+            buttonLabel: "개발자가 만든 다른앱 둘러보기"
+          },
+          {
+            code: "회05",
+            name: "로고+이름 합본",
+            desc: "용과 회사명을 한 장 PNG로 붙여 둔 합본입니다. 파일 하나만 넣으면 되는 배너·푸터에 씁니다.",
+            src: "company/logo-plus-name.png",
+            path: "company/logo-plus-name.png",
+            wide: true
+          },
+          {
+            code: "회06",
+            name: "회사명 작은 표시",
+            desc: "회사명 글자를 좁은 칸·작은 헤더에 맞게 작게 맞춰 둔 그림입니다.",
+            src: "company/logo-with-name-phone.png",
+            path: "company/logo-with-name-phone.png",
+            wide: true
+          }
+        ]
+      },
+      {
+        id: "samguk",
+        title: "삼국지",
+        items: [
+          {
+            code: "삼01",
+            name: "게임 아이콘",
+            desc: "전략 삼국지 대표 그림입니다. 로그인 화면·브라우저 탭·앱 바로가기에 가장 자주 쓰는 본 아이콘입니다.",
+            src: "apps/samguk/game-icon.jpg",
+            path: "apps/samguk/game-icon.jpg"
+          },
+          {
+            code: "삼02",
+            name: "중간 아이콘",
+            desc: "한 변이 192칸인 중간 크기입니다. 폰 홈 화면·웹앱 목록처럼 중간 크기가 필요할 때 씁니다.",
+            src: "apps/samguk/icon-192.png",
+            path: "apps/samguk/icon-192.png"
+          },
+          {
+            code: "삼03",
+            name: "큰 아이콘",
+            desc: "한 변이 512칸인 큰 그림입니다. 앱 설치·스토어·고해상도 미리보기처럼 크게 선명해야 할 때 씁니다.",
+            src: "apps/samguk/icon-512.png",
+            path: "apps/samguk/icon-512.png"
+          }
+        ]
+      },
+      {
+        id: "novel",
+        title: "소설",
+        items: [
+          {
+            code: "소01",
+            name: "탭 아이콘",
+            desc: "브라우저 탭 구석에 붙는 아주 작은 아이콘입니다. 주소창 옆·즐겨찾기 목록에 소설가 사이트를 알아볼 때 씁니다.",
+            src: "apps/novel/favicon.ico",
+            path: "apps/novel/favicon.ico"
+          },
+          {
+            code: "소02",
+            name: "탭 아이콘(PNG)",
+            desc: "탭용 작은 아이콘을 PNG로 둔 것입니다. 아이콘(ico) 대신 PNG가 필요한 곳(일부 설정·미리보기)에 씁니다.",
+            src: "apps/novel/favicon-32.png",
+            path: "apps/novel/favicon-32.png"
+          },
+          {
+            code: "소03",
+            name: "아이폰 홈",
+            desc: "아이폰 홈 화면에 「홈 화면에 추가」할 때 쓰는 아이콘입니다. 사파리에서 앱처럼 보이게 꽂을 때 씁니다.",
+            src: "apps/novel/apple-touch-icon.png",
+            path: "apps/novel/apple-touch-icon.png"
+          },
+          {
+            code: "소04",
+            name: "중간 아이콘",
+            desc: "192칸 중간 크기입니다. 폰·웹앱에서 소설가 앱 아이콘을 보통 크기로 보여줄 때 씁니다.",
+            src: "apps/novel/icon-192.png",
+            path: "apps/novel/icon-192.png"
+          },
+          {
+            code: "소05",
+            name: "큰 아이콘",
+            desc: "512칸 큰 그림입니다. 설치 화면·큰 미리보기처럼 선명하게 크게 보여야 할 때 씁니다.",
+            src: "apps/novel/icon-512.png",
+            path: "apps/novel/icon-512.png"
+          }
+        ]
+      },
+      {
+        id: "health",
+        title: "건강",
+        items: [
+          {
+            code: "건01",
+            name: "아이콘 180",
+            desc: "180칸 크기입니다. 건강 앱을 중간~아이폰에 가까운 크기로 넣을 때 씁니다.",
+            src: "apps/health/icon-180.png",
+            path: "apps/health/icon-180.png"
+          },
+          {
+            code: "건02",
+            name: "아이폰 홈",
+            desc: "아이폰 홈 화면에 건강 앱을 추가할 때 쓰는 아이콘입니다.",
+            src: "apps/health/apple-touch-icon.png",
+            path: "apps/health/apple-touch-icon.png"
+          },
+          {
+            code: "건03",
+            name: "중간 아이콘",
+            desc: "192칸 중간 크기입니다. 폰 홈·웹앱 목록에 건강 앱을 보통 크기로 보여줄 때 씁니다.",
+            src: "apps/health/icon-192.png",
+            path: "apps/health/icon-192.png"
+          },
+          {
+            code: "건04",
+            name: "큰 아이콘",
+            desc: "512칸 큰 그림입니다. 설치·큰 미리보기용입니다.",
+            src: "apps/health/icon-512.png",
+            path: "apps/health/icon-512.png"
+          },
+          {
+            code: "건05",
+            name: "안드로이드용 큰 아이콘",
+            desc: "안드로이드 홈에서 모서리가 잘려도 가운데 그림이 남도록 여백을 둔 큰 아이콘입니다. 안드로이드 앱 아이콘으로 쓸 때 고릅니다.",
+            src: "apps/health/icon-maskable-512.png",
+            path: "apps/health/icon-maskable-512.png"
+          }
+        ]
+      },
+      {
+        id: "tour",
+        title: "투어",
+        items: [
+          {
+            code: "투01",
+            name: "아이콘 180",
+            desc: "180칸 크기입니다. 시드니 투어 앱을 중간 크기로 넣을 때 씁니다.",
+            src: "apps/tour/favicon-180.png",
+            path: "apps/tour/favicon-180.png"
+          },
+          {
+            code: "투02",
+            name: "아이폰 홈",
+            desc: "아이폰 홈 화면에 투어 앱을 추가할 때 쓰는 아이콘입니다.",
+            src: "apps/tour/apple-touch-icon.png",
+            path: "apps/tour/apple-touch-icon.png"
+          },
+          {
+            code: "투03",
+            name: "큰 아이콘",
+            desc: "512칸 큰 그림입니다. 설치·큰 미리보기용입니다.",
+            src: "apps/tour/icon-512.png",
+            path: "apps/tour/icon-512.png"
+          }
+        ]
+      },
+      {
+        id: "emoji",
+        title: "이모지",
+        items: [
+          {
+            code: "이01",
+            name: "응원 하트(GIF)",
+            desc: "움직이는 하트 응원 그림입니다. 채팅·댓글·축하 장면에 GIF가 필요할 때 씁니다.",
+            src: "emoji/cheer-heart.gif",
+            path: "emoji/cheer-heart.gif"
+          },
+          {
+            code: "이02",
+            name: "응원 하트(WebP)",
+            desc: "같은 하트 응원을 WebP로 둔 것입니다. 용량을 줄여 사이트에 넣을 때 씁니다.",
+            src: "emoji/cheer-heart.webp",
+            path: "emoji/cheer-heart.webp"
+          }
+        ]
+      },
+      {
+        id: "originals",
+        title: "원본",
+        items: []
+      }
+    ];
+
+    var tabs = document.getElementById("tabs");
+    var main = document.getElementById("main");
+    var selName = document.getElementById("selName");
+    var selPath = document.getElementById("selPath");
+    var current = null;
+    var selectedPath = null;
+
+    SECTIONS.forEach(function (sec) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "tab";
+      b.textContent = sec.title;
+      b.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        showSection(sec.id);
+      });
+      tabs.appendChild(b);
+      sec._btn = b;
+    });
+
+    function showSection(id) {
+      current = id;
+      SECTIONS.forEach(function (sec) {
+        sec._btn.classList.toggle("on", sec.id === id);
+      });
+      var sec = SECTIONS.find(function (s) { return s.id === id; });
+      main.innerHTML = "";
+      if (!sec.items.length) {
+        var p = document.createElement("p");
+        p.className = "hint";
+        p.textContent = "이 칸은 아직 비어 있습니다.";
+        main.appendChild(p);
+        return;
+      }
+      var list = document.createElement("div");
+      list.className = "list";
+      sec.items.forEach(function (item) {
+        var itemEl = document.createElement("button");
+        itemEl.type = "button";
+        itemEl.className = "item";
+        if (selectedPath === item.path) itemEl.classList.add("on");
+
+        // A. 설명 칸 (글만)
+        var text = document.createElement("div");
+        text.className = "item-text";
+        var title = document.createElement("div");
+        title.className = "item-title";
+        var codeEl = document.createElement("span");
+        codeEl.className = "code";
+        codeEl.textContent = item.code || "";
+        var nameEl = document.createElement("span");
+        nameEl.className = "name";
+        nameEl.textContent = item.name || "";
+        var mark = document.createElement("span");
+        mark.className = "mark";
+        mark.textContent = "✓";
+        title.appendChild(codeEl);
+        title.appendChild(nameEl);
+        title.appendChild(mark);
+        var descEl = document.createElement("div");
+        descEl.className = "item-desc";
+        descEl.textContent = item.desc || "";
+        text.appendChild(title);
+        text.appendChild(descEl);
+        itemEl.appendChild(text);
+
+        // B. 그림 칸 (설명과 분리 · 원본 픽셀 크기)
+        var pic = document.createElement("div");
+        pic.className = "item-pic";
+        if (item.novelCredit) {
+          var credit = document.createElement("div");
+          credit.className = "credit-phone";
+          var ci = document.createElement("img");
+          ci.className = "i";
+          ci.src = item.iconSrc;
+          ci.alt = "";
+          ci.draggable = false;
+          var cl = document.createElement("img");
+          cl.className = "l";
+          cl.src = item.logoSrc;
+          cl.alt = item.name || "";
+          cl.draggable = false;
+          credit.appendChild(ci);
+          credit.appendChild(cl);
+          pic.appendChild(credit);
+        } else if (item.logoPlusApps) {
+          var apps = document.createElement("div");
+          apps.className = "apps-phone";
+          var mk = document.createElement("div");
+          mk.className = "apps-mark";
+          var ai = document.createElement("img");
+          ai.className = "i";
+          ai.src = item.iconSrc;
+          ai.alt = "";
+          ai.draggable = false;
+          var al = document.createElement("img");
+          al.className = "l";
+          al.src = item.logoSrc;
+          al.alt = "";
+          al.draggable = false;
+          mk.appendChild(ai);
+          mk.appendChild(al);
+          var btn = document.createElement("span");
+          btn.className = "btn";
+          btn.textContent = item.buttonLabel || "개발자가 만든 다른앱 둘러보기";
+          apps.appendChild(mk);
+          apps.appendChild(btn);
+          pic.appendChild(apps);
+        } else {
+          var img = document.createElement("img");
+          img.src = item.src;
+          img.alt = item.name || "";
+          img.draggable = false;
+          img.className = item.wide ? "phone-wide" : "phone-sq";
+          // 브라우저가 원본 크기로 그리도록 width/height 속성도 맞춤(확대 방지)
+          img.onload = function () {
+            if (!img.naturalWidth) return;
+            img.width = img.naturalWidth;
+            img.height = img.naturalHeight;
+          };
+          pic.appendChild(img);
+        }
+        itemEl.appendChild(pic);
+
+        itemEl.addEventListener("click", function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          selectedPath = item.path;
+          selName.textContent = (item.code || "") + " · " + (item.name || "");
+          selPath.textContent = item.desc || "";
+          showSection(current);
+        });
+        list.appendChild(itemEl);
+      });
+      main.appendChild(list);
+    }
+
+    // 시작 시 회사 칸 · 회01
+    showSection("company");
+    selectedPath = "company/chamzone-icon.png";
+    selName.textContent = "회01 · 용 그림만";
+    selPath.textContent = "회사 탭에서 「회01」이라고 부르면 됩니다.";
+    showSection("company");
+  </script>
+</body>
+</html>
