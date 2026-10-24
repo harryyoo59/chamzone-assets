@@ -26,5 +26,6 @@
 | `apps/health/` | 건강 앱 탭 아이콘 |
 | `apps/tour/` | 투어 앱 탭 아이콘 |
 | `apps/coach-onestop/` | 코치 원스톱 앱 탭 아이콘 |
+| `apps/bomkong/` | 봄콩 남매 어린이 캐릭터 |
 | `emoji/` | 이모지 |
 | `originals/` | 큰 원본 파일 |
