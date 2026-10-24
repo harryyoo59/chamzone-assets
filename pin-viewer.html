@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chamzone Interactive</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #071933;
+      overflow: hidden;
+    }
+    iframe {
+      border: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      background: #eef7ff;
+    }
+  </style>
+</head>
+<body>
+  <!-- Shell stays put even if inner page navigates; no browser chrome to mis-click. -->
+  <iframe
+    title="Chamzone Interactive"
+    src="https://chamzone-assets.vercel.app/"
+    referrerpolicy="no-referrer-when-downgrade"
+  ></iframe>
+</body>
+</html>

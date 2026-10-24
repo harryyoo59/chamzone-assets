@@ -410,14 +410,14 @@
       margin-top: 28px;
       max-width: 36rem;
     }
-    .contact-panel a.mail {
+    .contact-panel .mail {
+      margin: 0;
       font-family: Syne, Pretendard, sans-serif;
       font-size: clamp(1.2rem, 3vw, 1.6rem);
       font-weight: 700;
       color: var(--blue-deep);
       word-break: break-all;
     }
-    .contact-panel a.mail:hover { color: var(--orange-hot); }
 
     footer {
       padding: 28px clamp(16px, 4vw, 40px) 40px;
@@ -593,10 +593,11 @@
           chamzoneinteractive.vercel.app 에서 만나볼 수 있습니다.
         </p>
         <div class="contact-panel">
-          <a class="mail" href="mailto:harryyoo59@gmail.com">harryyoo59@gmail.com</a>
+          <p class="mail" id="emailText">harryyoo59@gmail.com</p>
           <div class="cta-row">
-            <a class="btn btn-primary" href="mailto:harryyoo59@gmail.com">메일 보내기</a>
+            <button type="button" class="btn btn-primary" id="btnCopyMail">이메일 복사</button>
           </div>
+          <p class="section-copy" id="copyHint" hidden style="margin-top:8px;color:var(--blue)">복사했습니다.</p>
         </div>
       </div>
     </section>
@@ -610,13 +611,29 @@
       </div>
       <p class="foot-meta">
         © <span id="y"></span> Chamzone Interactive
-        · <a href="warehouse.html">아이콘 창고</a>
+        · <a href="warehouse.html" id="warehouseLink">아이콘 창고</a>
       </p>
     </div>
   </footer>
 
   <script>
     document.getElementById("y").textContent = String(new Date().getFullYear());
+
+    // Keep in-page: hash scroll only. No mailto (opens OS mail UI / blanks Try Live).
+    // Warehouse stays a normal same-tab link for intentional use.
+    document.getElementById("btnCopyMail").addEventListener("click", function () {
+      var email = "harryyoo59@gmail.com";
+      var hint = document.getElementById("copyHint");
+      function show() {
+        hint.hidden = false;
+        setTimeout(function () { hint.hidden = true; }, 1800);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(email).then(show).catch(show);
+      } else {
+        show();
+      }
+    });
 
     var rows = document.querySelectorAll(".app-row");
     if ("IntersectionObserver" in window) {
