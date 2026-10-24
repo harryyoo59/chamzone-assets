@@ -302,7 +302,10 @@
     <header>
       <div class="head-row">
         <h1>아이콘 창고</h1>
-        <button type="button" class="btn-refresh" id="btnRefresh">새로고침</button>
+        <div style="display:flex;gap:8px;align-items:center;flex-shrink:0">
+          <a href="/" style="padding:10px 12px;min-height:44px;display:inline-flex;align-items:center;border-radius:10px;background:#eee;font-size:14px;font-weight:700">회사 홈</a>
+          <button type="button" class="btn-refresh" id="btnRefresh">새로고침</button>
+        </div>
       </div>
       <p class="sub">번호로 고르세요. 예: 「삼02」·「회01」. 창은 그대로 둡니다.</p>
       <nav class="tabs" id="tabs"></nav>
@@ -319,6 +322,8 @@
     document.addEventListener("click", function (e) {
       var a = e.target.closest("a");
       if (a) {
+        var href = a.getAttribute("href") || "";
+        if (href === "/" || href.indexOf("index.html") !== -1) return;
         e.preventDefault();
       }
     }, true);
